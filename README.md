@@ -5,7 +5,7 @@ Salman Rizqi Fatih - Vybes Full Stack Engineer Technical Test Submission
 
 ## Make sure the Backend service is running
 
-Clone the \*[Backend service](https://github.com/salmanrf/vybes-employees-api.git)
+Clone the [Backend service](https://github.com/salmanrf/vybes-employees-api.git)
 
 ## Run with Docker
 
