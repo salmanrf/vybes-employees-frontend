@@ -1,7 +1,7 @@
 ## Description
 
 Salman Rizqi Fatih - Vybes Full Stack Engineer Technical Test Submission
-(Backend)
+(Frontend)
 
 ## Make sure the Backend service is running
 
