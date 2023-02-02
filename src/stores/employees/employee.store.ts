@@ -11,8 +11,16 @@ import {
 export interface EmployeeState {
   list_loading: boolean;
   actions_loading: boolean;
-  items: Employee[];
   current_employee: Employee;
+  data: {
+    items: Employee[];
+    page: number;
+    limit: number;
+    sort_field: string;
+    sort_order: string;
+    total_items: number;
+    total_pages: number;
+  };
   findEmployees: (params: FindEmployeeDto) => Promise<any>;
   findOneEmployee: (employee_id: string) => Promise<Employee>;
   createEmployee: (params: CreateEmployeeDto) => Promise<Employee>;
@@ -32,7 +40,15 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
   current_employee: { ...initialValues },
   actions_loading: false,
   list_loading: false,
-  items: [],
+  data: {
+    items: [],
+    limit: 10,
+    page: 1,
+    sort_field: "created_at",
+    sort_order: "DESC",
+    total_items: 0,
+    total_pages: 1,
+  },
   findEmployees: async (params: FindEmployeeDto) => {
     try {
       set((state: EmployeeState) => ({ ...state, list_loading: true }));
@@ -43,11 +59,16 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
         data: { data },
       } = res;
 
-      set((state: EmployeeState) => ({ ...state, items: data.items }));
+      if (data) {
+        set((state: EmployeeState) => ({
+          ...state,
+          data: { ...(data as any) },
+        }));
+      }
 
       return data;
     } catch (error) {
-      console.log("error", error);
+      throw error;
     } finally {
       set((state: EmployeeState) => ({ ...state, list_loading: false }));
     }
@@ -66,7 +87,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
 
       return data as any;
     } catch (error) {
-      console.log("error", error);
+      throw error;
     } finally {
       set((state: EmployeeState) => ({ ...state, actions_loading: false }));
     }
@@ -83,7 +104,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
 
       return data as any;
     } catch (error) {
-      console.log("error", error);
+      throw error;
     } finally {
       set((state: EmployeeState) => ({ ...state, actions_loading: false }));
     }
@@ -100,7 +121,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
 
       return data as any;
     } catch (error) {
-      console.log("error", error);
+      throw error;
     } finally {
       set((state: EmployeeState) => ({ ...state, actions_loading: false }));
     }
@@ -117,7 +138,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
 
       return data as any;
     } catch (error) {
-      console.log("error", error);
+      throw error;
     } finally {
       set((state: EmployeeState) => ({ ...state, actions_loading: false }));
     }

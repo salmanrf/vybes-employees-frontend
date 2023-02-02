@@ -6,7 +6,7 @@ import SearchInput from "components/SearchInput";
 import { Small } from "components/Typography";
 import { Formik } from "formik";
 import useTitle from "hooks/useTitle";
-import { Employee } from "models/employee.model";
+import { Employee, FindEmployeeDto } from "models/employee.model";
 import { FC, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -54,16 +54,20 @@ const EmployeeList: FC = () => {
 
   const [employeeToDelete, setEmployeeToDelete] = useState<Employee | null>(null);
 
-  const [searchParams, setSearchParams] = useState({
+  const [searchParams, setSearchParams] = useState<FindEmployeeDto>({
     email: "",
     name: "",
     base_salary_start: null,
     base_salary_end: null,
+    page: 1,
+    limit: 10,
+    sort_field: "created_at",
+    sort_order: "DESC",
   });
 
   const { findEmployees, items, list_loading } = useEmployeeStore((state) => ({
     list_loading: state.list_loading,
-    items: state.items,
+    items: state.data.items,
     findEmployees: state.findEmployees,
   }));
 
@@ -231,7 +235,7 @@ const EmployeeList: FC = () => {
               />
               <SearchInput
                 name="base_salary_end"
-                placeholder="Gaji pkok sampai dengan 25000000"
+                placeholder="Gaji pkok sampai dengan ex 25000000"
                 value={values.base_salary_end ?? ""}
                 onChange={(e) => setFieldValue("base_salary_end", e.target.value)}
                 style={{ marginBottom: "1em" }}
@@ -255,7 +259,16 @@ const EmployeeList: FC = () => {
         </Button>
       </StyledFlexBox>
 
-      <CustomTable columnShape={EmployeeListColumnShape} data={items} />
+      <CustomTable
+        columnShape={EmployeeListColumnShape}
+        data={items}
+        hidePagination={false}
+        searchParams={searchParams}
+        setSearchParams={(params: Partial<FindEmployeeDto>) =>
+          setSearchParams((prev) => ({ ...prev, ...params }))
+        }
+        showFooter
+      />
     </Box>
   );
 };

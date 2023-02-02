@@ -1,7 +1,5 @@
-import { ArrowRightAlt } from "@mui/icons-material";
 import {
   Box,
-  ButtonBase,
   Pagination,
   Stack,
   styled,
@@ -14,9 +12,11 @@ import {
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
 import { H5 } from "components/Typography";
+import { FindEmployeeDto } from "models/employee.model";
 import { ChangeEvent, FC, useMemo } from "react";
 import { useExpanded, usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 import ScrollBar from "simplebar-react";
+import { useEmployeeStore } from "stores/employees/employee.store";
 
 // component props interface
 interface CustomTableProps {
@@ -25,6 +25,8 @@ interface CustomTableProps {
   rowClick?: (rowData: object) => void;
   hidePagination?: boolean;
   showFooter?: boolean;
+  searchParams: FindEmployeeDto;
+  setSearchParams: (params: Partial<FindEmployeeDto>) => void;
 }
 
 // styled component
@@ -56,11 +58,18 @@ const StyledPagination = styled(Pagination)(({ theme }) => ({
 }));
 
 const CustomTable: FC<CustomTableProps> = (props) => {
-  const { data, rowClick, showFooter, columnShape, hidePagination } = props;
+  const { data, rowClick, showFooter, columnShape, hidePagination, searchParams, setSearchParams } =
+    props;
   // hooks
   const theme = useTheme();
   const tableData: any = useMemo(() => data, [data]);
   const columns: any = useMemo(() => columnShape, [columnShape]);
+
+  const { data: employeeData } = useEmployeeStore((state) => ({ data: state.data }));
+  const limit =
+    (searchParams.limit || 10) > employeeData.items.length
+      ? employeeData.items.length
+      : searchParams.limit;
 
   const {
     getTableProps,
@@ -70,11 +79,15 @@ const CustomTable: FC<CustomTableProps> = (props) => {
     page,
     pageOptions,
     gotoPage,
+    pageCount,
+    state,
   }: any = useTable(
     {
       columns,
       data: tableData,
-    },
+      pageCount: employeeData.total_pages,
+      manualPagination: true,
+    } as any,
     useSortBy,
     useExpanded,
     usePagination,
@@ -82,6 +95,7 @@ const CustomTable: FC<CustomTableProps> = (props) => {
   );
   // handle pagination
   const handleChange = (_e: ChangeEvent<unknown>, currentPageNo: number) => {
+    setSearchParams({ page: currentPageNo });
     gotoPage(currentPageNo - 1);
   };
 
@@ -178,23 +192,15 @@ const CustomTable: FC<CustomTableProps> = (props) => {
 
       {!hidePagination && (
         <Stack alignItems="flex-end" marginY={1}>
-          <StyledPagination count={pageOptions.length} shape="rounded" onChange={handleChange} />
+          <StyledPagination count={pageCount} shape="rounded" onChange={handleChange} />
         </Stack>
       )}
 
       {showFooter && (
         <FlexBox alignItems="center" justifyContent="space-between">
-          <H5 color="text.disabled">Showing 1-12 of 24 result</H5>
-          <ButtonBase
-            disableRipple
-            sx={{
-              fontSize: 14,
-              fontWeight: 600,
-            }}
-          >
-            See All
-            <ArrowRightAlt sx={{ marginLeft: 0.5 }} />
-          </ButtonBase>
+          <H5 color="text.disabled">
+            Showing {limit} of {employeeData.total_items} result
+          </H5>
         </FlexBox>
       )}
     </Box>
