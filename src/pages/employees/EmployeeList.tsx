@@ -1,4 +1,5 @@
 import { Box, Button, Modal, styled, Typography } from "@mui/material";
+import { deleteEmployee } from "apis/employees-api";
 import CustomTable from "components/employees/CustomTable";
 import FlexBox from "components/FlexBox";
 import SearchInput from "components/SearchInput";
@@ -7,6 +8,7 @@ import { Formik } from "formik";
 import useTitle from "hooks/useTitle";
 import { Employee } from "models/employee.model";
 import { FC, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useEmployeeStore } from "stores/employees/employee.store";
 
@@ -72,6 +74,28 @@ const EmployeeList: FC = () => {
       base_salary_end: searchParams.base_salary_end || null,
     });
   }, [searchParams]);
+
+  async function submitDelete() {
+    try {
+      if (!employeeToDelete) {
+        return;
+      }
+
+      const res = await deleteEmployee(employeeToDelete.employee_id);
+
+      findEmployees({
+        ...searchParams,
+        base_salary_start: searchParams.base_salary_start || null,
+        base_salary_end: searchParams.base_salary_end || null,
+      });
+
+      setEmployeeToDelete(null);
+    } catch (error) {
+      console.log("error", error);
+
+      toast.error((error as Error).message);
+    }
+  }
 
   const EmployeeListColumnShape = [
     {
@@ -156,11 +180,21 @@ const EmployeeList: FC = () => {
       >
         <Box sx={{ ...modalStyle }}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Hapus Karyawan {employeeToDelete ? `"${employeeToDelete.name}"` : ""} ?
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <StyledFlexBox justifyContent={"end"} style={{ marginTop: "1.5em" }}>
+            <Button
+              variant="contained"
+              onClick={() => submitDelete()}
+              color={"error"}
+              style={{ color: "white", marginRight: "1em" }}
+            >
+              Hapus
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={() => setEmployeeToDelete(null)}>
+              Batal
+            </Button>
+          </StyledFlexBox>
         </Box>
       </Modal>
       <StyledFlexBox>

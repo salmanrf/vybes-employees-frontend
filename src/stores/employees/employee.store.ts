@@ -64,7 +64,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
 
       set((state: EmployeeState) => ({ ...state, current_employee: data }));
 
-      return data as Employee;
+      return data as any;
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -81,7 +81,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
         data: { data },
       } = res;
 
-      return data as Employee;
+      return data as any;
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -98,7 +98,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
         data: { data },
       } = res;
 
-      return data as Employee;
+      return data as any;
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -115,7 +115,7 @@ export const useEmployeeStore = create<EmployeeState>((set) => ({
         data: { data },
       } = res;
 
-      return data as Employee;
+      return data as any;
     } catch (error) {
       console.log("error", error);
     } finally {
