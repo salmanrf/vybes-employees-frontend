@@ -1,7 +1,7 @@
 import { Box, Button, Grid, styled } from "@mui/material";
+import EmployeeCard from "components/employees/EmployeeCard";
 import FlexBox from "components/FlexBox";
 import SearchInput from "components/SearchInput";
-import UserCard from "components/userManagement/UserCard";
 import useTitle from "hooks/useTitle";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
@@ -22,26 +22,26 @@ const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   },
 }));
 
-const UserGrid: FC = () => {
+const EmployeeGrid: FC = () => {
   // change navbar title
-  useTitle("User Grid");
+  useTitle("Employee Grid");
 
   const navigate = useNavigate();
-  const handleAddUser = () => navigate("/dashboard/add-user");
+  const handleAddEmployee = () => navigate("/dashboard/add-Employee");
 
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
-        <SearchInput placeholder="Search user..." />
-        <Button variant="contained" onClick={handleAddUser}>
-          Add New User
+        <SearchInput placeholder="Search Employee..." />
+        <Button variant="contained" onClick={handleAddEmployee}>
+          Add New Employee
         </Button>
       </StyledFlexBox>
 
       <Grid container spacing={3}>
-        {userList.map((user, index) => (
+        {EmployeeList.map((Employee, index) => (
           <Grid item md={4} sm={6} xs={12} key={index}>
-            <UserCard user={user} />
+            <EmployeeCard Employee={Employee} />
           </Grid>
         ))}
       </Grid>
@@ -49,7 +49,7 @@ const UserGrid: FC = () => {
   );
 };
 
-const userList = [
+const EmployeeList = [
   {
     cover: "/static/cover/cover-1.png",
     avatar: "/static/avatar/001-man.svg",
@@ -106,4 +106,4 @@ const userList = [
   },
 ];
 
-export default UserGrid;
+export default EmployeeGrid;

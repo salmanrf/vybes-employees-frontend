@@ -1,18 +1,8 @@
-import {
-  AppBar,
-  Box,
-  styled,
-  Theme,
-  Toolbar,
-  useMediaQuery,
-} from "@mui/material";
+import { AppBar, Box, styled, Theme, Toolbar, useMediaQuery } from "@mui/material";
 import { H2 } from "components/Typography";
 import { TitleContext } from "contexts/TitleContext";
 import { FC, useContext } from "react";
-import LanguagePopover from "./popovers/LanguagePopover";
-import NotificationsPopover from "./popovers/NotificationsPopover";
 import ProfilePopover from "./popovers/ProfilePopover";
-import ServicePopover from "./popovers/ServicePopover";
 
 // root component interface
 interface DashboardNavBarProps {
@@ -47,9 +37,7 @@ const ToggleIcon = styled(Box)(({ theme }) => ({
 }));
 
 // root component
-const DashboardNavbar: FC<DashboardNavBarProps> = ({
-  setShowMobileSideBar,
-}) => {
+const DashboardNavbar: FC<DashboardNavBarProps> = ({ setShowMobileSideBar }) => {
   const { title } = useContext(TitleContext);
   const upSm = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
   const downSm = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
@@ -65,16 +53,8 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
           </Box>
 
           <Box flexGrow={1} textAlign="center">
-            <img
-              src="/static/logo/logo.svg"
-              width="100%"
-              height="30"
-              alt="Logo"
-            />
+            <img src="/static/logo/logo.svg" width="100%" height="30" alt="Logo" />
           </Box>
-
-          <LanguagePopover />
-          <ProfilePopover />
         </StyledToolBar>
       </DashboardNavbarRoot>
     );
@@ -89,25 +69,12 @@ const DashboardNavbar: FC<DashboardNavBarProps> = ({
           <ToggleIcon />
         </Box>
 
-        <H2
-          fontSize={21}
-          lineHeight={0}
-          mx={1}
-          fontWeight="700"
-          color="text.primary"
-        >
+        <H2 fontSize={21} lineHeight={0} mx={1} fontWeight="700" color="text.primary">
           {title}
         </H2>
 
         <Box flexGrow={1} ml={1} />
 
-        {upSm && (
-          <>
-            <LanguagePopover />
-            <NotificationsPopover />
-            <ServicePopover />
-          </>
-        )}
         <ProfilePopover />
       </StyledToolBar>
     </DashboardNavbarRoot>

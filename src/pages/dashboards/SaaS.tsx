@@ -1,10 +1,4 @@
-import { Box, Grid, useTheme } from "@mui/material";
-import Analytics from "components/Dashboards/saas/Analytics";
-import SaaSCard from "components/Dashboards/saas/Card";
-import Footer from "components/Dashboards/saas/Footer";
-import RecentOrders from "components/Dashboards/saas/RecentOrders";
-import TopSelling from "components/Dashboards/saas/TopSelling";
-import TotalSpent from "components/Dashboards/saas/TotalSpent";
+import { Box, useTheme } from "@mui/material";
 import useTitle from "hooks/useTitle";
 import BucketIcon from "icons/BucketIcon";
 import EarningIcon from "icons/EarningIcon";
@@ -47,7 +41,7 @@ const SaaS: FC = () => {
 
   return (
     <Box pt={2} pb={4}>
-      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
+      {/* <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
         {cardList.map((card, index) => (
           <Grid item lg={3} xs={6} key={index}>
             <SaaSCard card={card} />
@@ -73,7 +67,7 @@ const SaaS: FC = () => {
         <Grid item xs={12}>
           <Footer imageLink="/static/illustration/sass-dashboard.svg" />
         </Grid>
-      </Grid>
+      </Grid> */}
     </Box>
   );
 };

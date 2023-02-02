@@ -183,8 +183,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           //@ts-ignore
           const { data } = response.data;
 
-          console.log("data", data);
-
           dispatch({
             type: Types.Init,
             payload: {

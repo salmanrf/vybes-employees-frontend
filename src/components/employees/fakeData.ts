@@ -1,4 +1,4 @@
-export const userListFakeData = [
+export const EmployeeListFakeData = [
   {
     id: "615193a4c7e1363df77b9929",
     name: "Natalie Dormer",

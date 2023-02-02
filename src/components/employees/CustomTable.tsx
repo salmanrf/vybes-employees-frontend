@@ -15,13 +15,7 @@ import {
 import FlexBox from "components/FlexBox";
 import { H5 } from "components/Typography";
 import { ChangeEvent, FC, useMemo } from "react";
-import {
-  useExpanded,
-  usePagination,
-  useRowSelect,
-  useSortBy,
-  useTable,
-} from "react-table";
+import { useExpanded, usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 import ScrollBar from "simplebar-react";
 
 // component props interface
@@ -92,8 +86,7 @@ const CustomTable: FC<CustomTableProps> = (props) => {
   };
 
   // table border color
-  const borderColor =
-    theme.palette.mode === "light" ? "text.secondary" : "divider";
+  const borderColor = theme.palette.mode === "light" ? "text.secondary" : "divider";
 
   return (
     <Box>
@@ -185,11 +178,7 @@ const CustomTable: FC<CustomTableProps> = (props) => {
 
       {!hidePagination && (
         <Stack alignItems="flex-end" marginY={1}>
-          <StyledPagination
-            count={pageOptions.length}
-            shape="rounded"
-            onChange={handleChange}
-          />
+          <StyledPagination count={pageOptions.length} shape="rounded" onChange={handleChange} />
         </Stack>
       )}
 

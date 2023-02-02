@@ -1,11 +1,11 @@
 import { Box, Card, Divider, Grid, IconButton, styled } from "@mui/material";
 import { H3, H6, Small, Tiny } from "components/Typography";
 import UkoAvatar from "components/UkoAvatar";
-import React, { FC } from "react";
+import { FC } from "react";
 
 // component props interface
-interface UserCardProps {
-  user: {
+interface EmployeeCardProps {
+  Employee: {
     cover: string;
     avatar: string;
     name: string;
@@ -45,13 +45,13 @@ const StyledAvatar = styled(UkoAvatar)(({ theme }) => ({
   borderColor: theme.palette.background.paper,
 }));
 
-const UserCard: FC<UserCardProps> = ({ user }) => {
+const EmployeeCard: FC<EmployeeCardProps> = ({ Employee }) => {
   return (
     <Card>
       <ImageWrapper>
-        <img src={user.cover} width="100%" height="100%" alt={user.name} />
+        <img src={Employee.cover} width="100%" height="100%" alt={Employee.name} />
 
-        <StyledAvatar src={user.avatar} alt={user.name} />
+        <StyledAvatar src={Employee.avatar} alt={Employee.name} />
       </ImageWrapper>
 
       <Box
@@ -62,9 +62,9 @@ const UserCard: FC<UserCardProps> = ({ user }) => {
           marginTop: 5,
         }}
       >
-        <H6>{user.name}</H6>
+        <H6>{Employee.name}</H6>
         <Tiny color="text.disabled" fontWeight={500}>
-          {user.position}
+          {Employee.position}
         </Tiny>
 
         <Box marginTop={2}>
@@ -87,15 +87,15 @@ const UserCard: FC<UserCardProps> = ({ user }) => {
 
       <Grid container spacing={3} mb={2}>
         <Grid item xs={4} textAlign="center">
-          <H3>{user.post}</H3>
+          <H3>{Employee.post}</H3>
           <Small color="text.disabled">Post Avg.</Small>
         </Grid>
         <Grid item xs={4} textAlign="center">
-          <H3>{user.follower}</H3>
+          <H3>{Employee.follower}</H3>
           <Small color="text.disabled">Followers</Small>
         </Grid>
         <Grid item xs={4} textAlign="center">
-          <H3>{user.following}</H3>
+          <H3>{Employee.following}</H3>
           <Small color="text.disabled">Following</Small>
         </Grid>
       </Grid>
@@ -103,4 +103,4 @@ const UserCard: FC<UserCardProps> = ({ user }) => {
   );
 };
 
-export default UserCard;
+export default EmployeeCard;

@@ -24,9 +24,9 @@ const DashboardSaaS = Loadable(lazy(() => import("./pages/dashboards/SaaS")));
 const UserProfile = Loadable(lazy(() => import("./pages/UserProfile")));
 
 // user management
-const UserList = Loadable(lazy(() => import("./pages/userManagement/UserList")));
-const UserGrid = Loadable(lazy(() => import("./pages/userManagement/UserGrid")));
-const AddNewUser = Loadable(lazy(() => import("./pages/userManagement/AddNewUser")));
+const EmployeeList = Loadable(lazy(() => import("./pages/employees/EmployeeList")));
+const UserGrid = Loadable(lazy(() => import("./pages/employees/EmployeeGrid")));
+const AddNewUser = Loadable(lazy(() => import("./pages/employees/AddNewEmployee")));
 
 // error
 const Error = Loadable(lazy(() => import("./pages/404")));
@@ -71,10 +71,14 @@ const routes = [
       },
       {
         path: "employees",
-        element: <UserList />,
+        element: <EmployeeList />,
       },
       {
         path: "employees/new",
+        element: <AddNewUser />,
+      },
+      {
+        path: "employees/:employee_id/edit",
         element: <AddNewUser />,
       },
     ],
